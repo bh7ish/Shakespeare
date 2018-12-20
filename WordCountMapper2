@@ -1,0 +1,93 @@
+package org.myorg;
+import java.io.BufferedReader;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URI;
+import java.util.HashSet;
+import java.util.StringTokenizer;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.io.Writable;
+
+import java.lang.String;
+import org.apache.hadoop.mapreduce.Mapper;
+import org.apache.hadoop.mapreduce.lib.input.FileSplit;
+public class WordCountMapper extends Mapper<LongWritable, Text, Text, IntWritable>
+{
+	
+public void map(LongWritable key, Text value, Context context)
+throws IOException, InterruptedException
+{
+//	WordCountWritable WCWMapper = new WordCountWritable();
+	
+	
+	
+	
+	  
+	
+//	Text  = new Text();
+
+	String Scene = ((FileSplit) context.getInputSplit()).getPath().getName().toString();
+
+//	Scene.set(((FileSplit) context.getInputSplit()).getPath().getName().toString());
+	
+	 URI[] cacheFile = context.getCacheFiles();
+
+
+	    HashSet<String> textList = new HashSet<String>();
+		
+		String filename=null;
+		int lastindex =cacheFile[0].toString().lastIndexOf('/');
+		if(lastindex!=-1)
+		{
+			filename =cacheFile[0].toString().substring(lastindex+1, cacheFile[0].toString().length());
+			
+		}
+		else
+		{
+			filename=cacheFile[0].toString();
+		}
+		
+		String Emotion = filename;
+	
+		String SceneEmotion = Scene + "_" + Emotion;
+		
+		
+		BufferedReader reader = new BufferedReader(new FileReader(filename));
+		String line = null;
+		while ((line = reader.readLine()) != null) {
+//			System.out.println(line+"  ");
+			StringTokenizer listTokens = new StringTokenizer(line);
+			while(listTokens.hasMoreTokens())
+			{	
+				
+				textList.add(listTokens.nextToken());
+			}
+			
+		}
+		reader.close();
+		
+		//Read the text files present in input folder
+		StringTokenizer  textTokens = new StringTokenizer(value.toString());
+		
+		while (textTokens.hasMoreTokens()) {
+//			int count = 1;
+				String word= textTokens.nextToken();
+				
+//WCWMapper.set(Emotion, count);
+		
+				if(textList.contains(word))
+				{
+					context.write(new Text(SceneEmotion), new IntWritable(1));
+				}
+				else {
+					context.write(new Text(SceneEmotion), new IntWritable(0));
+				}
+	}
+	
+}
+
+
+
+}
