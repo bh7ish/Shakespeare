@@ -1,0 +1,8 @@
+
+
+URI[] cacheFile = context.getCacheFiles();
+ArrayList<String> list = new ArrayList<String>();
+while (cacheFile.hasNext()){
+    list.add(cacheFile.next());
+}
+cacheFile.close();
