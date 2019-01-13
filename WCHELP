@@ -21,6 +21,7 @@ throws IOException, InterruptedException
 
         // Read the input filename into the mapper, calling it 'TitleScene'
      String TitleScene = ((FileSplit) context.getInputSplit()).getPath().getName();
+     TitleScene = 
    
         // Input files are in the form of BOOKTITLE_CHAPTER.txt, ie PridePrejudice_15.txt
 	// The code below emits a String with the Book Title, Chapter and Emotion
@@ -33,8 +34,8 @@ throws IOException, InterruptedException
     URI[] cacheFile = context.getCacheFiles();
 
     
-   		// Break line into words for processing
-    StringTokenizer wordList = new StringTokenizer(value.toString());
+   		// Break line into words for processing and convert all letters to lower case
+    StringTokenizer wordList = new StringTokenizer(value.toString().toLowerCase);
 		String currentToken = null;
 		while (wordList.hasMoreTokens()) {
 			currentToken = wordList.nextToken();
