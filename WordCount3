@@ -25,17 +25,11 @@ throws IOException, InterruptedException
 	
 	
 	  
+	String Title = ((FileSplit) context.getInputSplit()).getPath().getName();
 	
-//	Text  = new Text();
+	URI[] cacheFile = context.getCacheFiles();
 
-	String fileName = ((FileSplit) context.getInputSplit()).getPath().getName();
-	
-//	Scene.set(((FileSplit) context.getInputSplit()).getPath().getName().toString());
-	
-	 URI[] cacheFile = context.getCacheFiles();
-
-
-	    HashSet<String> textList = new HashSet<String>();
+	HashSet<String> textList = new HashSet<String>();
 		
 		String filename=null;
 		int lastindex =cacheFile[0].toString().lastIndexOf('/');
@@ -49,21 +43,17 @@ throws IOException, InterruptedException
 			filename=cacheFile[0].toString();
 		}
 		
-	//	String Emotion = filename;
 		
 		Pattern pattern = Pattern.compile("_");
-	    String[] split = pattern.split(fileName.substring(0, fileName.length()-3));
-	    String TitleSceneEmotion = split[1] + ", " + split[2] + ", " + "Joy";
+	    String[] split = pattern.split(Title.substring(0, Title.length()-3));
+	    String TitleSceneEmotion = split[0] + ", " + split[1] + ", " + "Joy";
 		
 		
-	
-		// String SceneEmotion = Scene + ", " + Emotion;
 		
-		
-		BufferedReader reader = new BufferedReader(new FileReader(filename));
+	BufferedReader reader = new BufferedReader(new FileReader(filename));
 		String line = null;
 		while ((line = reader.readLine()) != null) {
-//			System.out.println(line+"  ");
+
 			StringTokenizer listTokens = new StringTokenizer(line);
 			while(listTokens.hasMoreTokens())
 			{	
@@ -78,10 +68,9 @@ throws IOException, InterruptedException
 		StringTokenizer  textTokens = new StringTokenizer(value.toString());
 		
 		while (textTokens.hasMoreTokens()) {
-//			int count = 1;
+
 				String word= textTokens.nextToken();
 				
-//WCWMapper.set(Emotion, count);
 		
 				if(textList.contains(word))
 				{
