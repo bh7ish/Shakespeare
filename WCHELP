@@ -42,7 +42,7 @@ throws IOException, InterruptedException
 		// if the current word is present in the cachefile then generate a key-value pair
 			if (cacheFile.contains(currentToken)) {
 			
-            context.write(new Text(TitleSceneEmotion), new IntWritable(1));
+        		    context.write(new Text(TitleSceneEmotion), new IntWritable(1));
 			
             }
             
