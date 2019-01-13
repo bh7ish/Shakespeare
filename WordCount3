@@ -24,8 +24,9 @@ throws IOException, InterruptedException
 
 	
 	
-	  
+	  	// Get the input filename into the mapper, in this case 'Title'
 	String Title = ((FileSplit) context.getInputSplit()).getPath().getName();
+	
 	
 	URI[] cacheFile = context.getCacheFiles();
 
