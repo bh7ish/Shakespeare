@@ -27,41 +27,34 @@ throws IOException, InterruptedException
 	  	// Get the input filename into the mapper, in this case 'Title'
 	String Title = ((FileSplit) context.getInputSplit()).getPath().getName();
 	
-		// Set up the mapper to access the file from the Distributed Cache
-	URI[] cacheFile = context.getCacheFiles();
 	
 		// Set up a HashSet entitled 'textList' to store words from the text files
 	HashSet<String> textList = new HashSet<String>();
+	
+		// Set up the mapper to access the file from the Distributed Cache
+	URI[] cacheFile = context.getCacheFiles();
+	 
+	String filename=cacheFile[0].toString();
+		
+		// Files are in the form of BOOKTITLE_CHAPTER.txt 
+		// The code below emits a String with The Book Title, Chapter and Emotion
+		// In this example the cached file is Joy
+	Pattern pattern = Pattern.compile("_");
+        String[] split = pattern.split(Title.substring(0, Title.length()-3));
+	String TitleSceneEmotion = split[0] + ", " + split[1] + ", " + "Joy";
 		
 		
-		String filename=null;
-		int lastindex =cacheFile[0].toString().lastIndexOf('/');
-		if(lastindex!=-1)
-		{
-			filename =cacheFile[0].toString().substring(lastindex+1, cacheFile[0].toString().length());
-			
-		}
-		else
-		{
-			filename=cacheFile[0].toString();
-		}
-		
-		
-		Pattern pattern = Pattern.compile("_");
-	    String[] split = pattern.split(Title.substring(0, Title.length()-3));
-	    String TitleSceneEmotion = split[0] + ", " + split[1] + ", " + "Joy";
-		
-		
-		
+		// Reading in the cached file
 	BufferedReader reader = new BufferedReader(new FileReader(filename));
 		String line = null;
 		while ((line = reader.readLine()) != null) {
 
-			StringTokenizer listTokens = new StringTokenizer(line);
-			while(listTokens.hasMoreTokens())
+                // Goes through the 
+		StringTokenizer listTokens = new StringTokenizer();
+		while(listTokens.hasMoreTokens())
 			{	
 				
-				textList.add(listTokens.nextToken());
+			textList.add(listTokens.nextToken());
 			}
 			
 		}
