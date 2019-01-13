@@ -23,10 +23,10 @@ throws IOException, InterruptedException
      String TitleScene = ((FileSplit) context.getInputSplit()).getPath().getName();
    
         // Input files are in the form of BOOKTITLE_CHAPTER.txt, ie PridePrejudice_15.txt
-	// The code below emits a String with The Book Title, Chapter and Emotion
-	// In this example the cached file is Joy
+	// The code below emits a String with the Book Title, Chapter and Emotion
+	// In this example the cached emotion is Joy
     Pattern pattern = Pattern.compile("_");
-    String[] split = pattern.split(Title.substring(0, Title.length()-3));
+    String[] split = pattern.split(TitleScene.substring(0, TitleScene.length()-3));
 	String TitleSceneEmotion = split[0] + ", " + split[1] + ", " + "Joy";
     
   		// Set up the mapper to access the file from the Distributed Cache  
