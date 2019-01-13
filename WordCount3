@@ -27,10 +27,12 @@ throws IOException, InterruptedException
 	  	// Get the input filename into the mapper, in this case 'Title'
 	String Title = ((FileSplit) context.getInputSplit()).getPath().getName();
 	
-	
+		// Set up the mapper to access the file from the Distributed Cache
 	URI[] cacheFile = context.getCacheFiles();
-
+	
+		// Set up a HashSet entitled 'textList' to store words from the text files
 	HashSet<String> textList = new HashSet<String>();
+		
 		
 		String filename=null;
 		int lastindex =cacheFile[0].toString().lastIndexOf('/');
